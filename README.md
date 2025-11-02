@@ -11,7 +11,6 @@ In order of how a new user would want to use the repo
 - simulate a single Ball & Stick neuron and plot the simulation results
 - create a dataset of Ball & Stick neurons and plot the dataset statistics
 - train a DNN twin of a Ball & Stick neuron and plot the training results
-- evaluate the DNN twin of a Ball & Stick neuron and plot the evaluation results
 
 ### Single Neuron Model
 - `neuron_model_ball_and_stick.py` - Implementation of the Ball & Stick neuron model with synaptic filtering, dendritic branching, and various nonlinearities (NMDA-like, AMPA-like, two sided saturation)

@@ -16,8 +16,8 @@ from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 from sklearn.metrics import roc_curve, auc, roc_auc_score, explained_variance_score
 
-from neuron_model_multi_branch_filter_and_fire import MultiBranchFilterAndFireNeuron
-from dataloader_FF_neuron import FFNeuronDataset
+from neuron_model_ball_and_stick import BallAndStickNeuron
+from dataloader_BS_neuron import BSNeuronDataset
 from twin_model_definitions import load_twin_model
 import config
 
@@ -1166,20 +1166,11 @@ if __name__ == "__main__":
     print('-------------------------------------------------------------------------------------')
 
     # Select the neuron model folder and files
-    # 1 branch linear linear-saturating I&F (refractory time constant = 16ms)
-    # selected_folder_name = r"MultiBranch_IF_1_branches_of_4_segments__seg_f_linear_branch_f_linear_sat__tau_syn_32ms_tau_refr_16ms"
+    # BallAndStickNeuron: large dendrite (~3.5 times lambda) - with NMDA synapses
+    # selected_folder_name = r"BallAndStickNeuron_Soma_Hay2011_Dend_Lxd_2048um_x_1_0um_8segs"
 
-    # 1 branch linear linear-saturating F&F (refractory time constant = 16ms, synapse time constant = 16ms)
-    # selected_folder_name = r"MultiBranch_FF_1_branches_of_4_segments__seg_f_linear_branch_f_linear_sat__tau_syn_16ms_tau_refr_16ms"
-
-    # 1 branch linear linear-saturating F&F (refractory time constant = 16ms)
-    selected_folder_name = r"MultiBranch_FF_1_branches_of_4_segments__seg_f_linear_branch_f_linear_sat__tau_syn_32ms_tau_refr_16ms"
-
-    # 1 branch linear linear-saturating F&F (refractory time constant = 40ms)
-    # selected_folder_name = r"MultiBranch_FF_1_branches_of_4_segments__seg_f_linear_branch_f_linear_sat__tau_syn_32ms_tau_refr_40ms"
-
-    # 4 branches linear NMDA-saturating F&F (refractory time constant = 16ms)
-    # selected_folder_name = r"MultiBranch_FF_4_branches_of_4_segments__seg_f_linear_branch_f_NMDA_sat__tau_syn_32ms_tau_refr_16ms"
+    # BallAndStickNeuron: small dendrite (~0.1 times lambda) - with AMPA synapses (basically a point neuron)
+    selected_folder_name = r"BallAndStickNeuron_Soma_Hay2011_Dend_Lxd_128um_x_4_0um_8segs"
 
     # get the corresponding model and data folders
     selected_model_folder = os.path.join(models_root, selected_folder_name)
@@ -1196,42 +1187,17 @@ if __name__ == "__main__":
     print('------------------------------------------------------------------------------------------------')
 
     # select the dnn twin model file
-    # 1 branch linear linear-saturating I&F
-    if selected_folder_name == r"MultiBranch_IF_1_branches_of_4_segments__seg_f_linear_branch_f_linear_sat__tau_syn_32ms_tau_refr_40ms":
-        # pretrained_model_name = f'{selected_folder_name}_TCN_ResNet_D_7_W_32_T_213_params_221K_AUC_0_9022_somaR2_616__calibR2_9977.pt'
-        pretrained_model_name = f'{selected_folder_name}_TCN_ResNet_D_19_W_16_T_229_params_65K_AUC_0_9046_somaR2_638__calibR2_9983.pt'
+    # BallAndStickNeuron: large dendrite (~3.5 times lambda) - with NMDA synapses
+    if selected_folder_name == r"BallAndStickNeuron_Soma_Hay2011_Dend_Lxd_2048um_x_1_0um_8segs":
+        pretrained_model_name = f'{selected_folder_name}_TCN_D_6_W_16_T_221_params_58K_AUC_0_9674_somaR2_605__calibR2_9806.pt'
 
-    if selected_folder_name == r"MultiBranch_FF_1_branches_of_4_segments__seg_f_linear_branch_f_linear_sat__tau_syn_16ms_tau_refr_16ms":
-        pretrained_model_name = f'{selected_folder_name}_TCN_ResNet_D_27_W_16_T_113_params_39K_AUC_0_9586_somaR2_738__calibR2_9965.pt'
-
-    # 1 branch battery linear-saturating F&F (refractory time constant = 16ms)
-    if selected_folder_name == r"MultiBranch_FF_1_branches_of_4_segments__seg_f_linear_branch_f_linear_sat__tau_syn_32ms_tau_refr_16ms":
-        # pretrained_model_name = f'{selected_folder_name}_TCN_ResNet_D_9_W_16_T_225_params_59K_AUC_0_9500_somaR2_699__calibR2_9949.pt'
-        # pretrained_model_name = f'{selected_folder_name}_TCN_ResNet_D_15_W_16_T_211_params_58K_AUC_0_9543_somaR2_725__calibR2_9957.pt'
-        # pretrained_model_name = f'{selected_folder_name}_TCN_ResNet_D_19_W_32_T_229_params_254K_AUC_0_9475_somaR2_822__calibR2_9975.pt'
-        # pretrained_model_name = f'{selected_folder_name}_TCN_ResNet_D_25_W_32_T_201_params_239K_AUC_0_9454_somaR2_809__calibR2_9952.pt'
-
-        pretrained_model_name = f'{selected_folder_name}_TCN_ResNet_D_31_W_24_T_249_params_168K_AUC_0_9779_somaR2_825__calibR2_9843.pt' # ResNet TCN. 150 epochs, LR 0.0003, WD 0.001, GN 30.0, RMSNorm, leaky gelu 0.15, TC scale 0.15, TC loss 0.61 - 5.8/5 optimizable
-        # pretrained_model_name = f'{selected_folder_name}_TCN_ResNet_D_31_W_48_T_249_params_664K_AUC_0_9884_somaR2_892__calibR2_9936.pt' # ResNet TCN. no TC. 2/5 optimizable (very bad!!!)
-
-    # 1 branch battery linear-saturating F&F (refractory time constant = 40ms)
-    if selected_folder_name == r"MultiBranch_FF_1_branches_of_4_segments__seg_f_linear_branch_f_linear_sat__tau_syn_32ms_tau_refr_40ms":
-        # pretrained_model_name = f'{selected_folder_name}_TCN_ResNet_D_9_W_16_T_223_params_59K_AUC_0_9578_somaR2_667__calibR2_9904.pt'
-        # pretrained_model_name = f'{selected_folder_name}_TCN_ResNet_D_9_W_24_T_239_params_140K_AUC_0_9631_somaR2_709__calibR2_9918.pt'
-        # pretrained_model_name = f'{selected_folder_name}_TCN_ResNet_D_9_W_24_T_255_params_149K_AUC_0_9643_somaR2_713__calibR2_9931.pt'
-        # pretrained_model_name = f'{selected_folder_name}_TCN_ResNet_D_9_W_24_T_257_params_149K_AUC_0_9684_somaR2_783__calibR2_9932.pt'
-        # pretrained_model_name = f'{selected_folder_name}_TCN_ResNet_D_9_W_64_T_257_params_1043K_AUC_0_9652_somaR2_791__calibR2_9918.pt'
-        pretrained_model_name = f'{selected_folder_name}_TCN_ResNet_D_7_W_12_T_233_params_34K_AUC_0_9650_somaR2_770__calibR2_9930.pt'
-
-    # 4 branches linear NMDA-saturating F&F (refractory time constant = 16ms)
-    if selected_folder_name == r"MultiBranch_FF_4_branches_of_4_segments__seg_f_linear_branch_f_NMDA_sat__tau_syn_32ms_tau_refr_16ms":
-        # pretrained_model_name = f'{selected_folder_name}_TCN_ResNet_D_19_W_16_T_229_params_70K_AUC_0_9407_somaR2_702__calibR2_9959.pt'
-        # pretrained_model_name = f'{selected_folder_name}_TCN_ResNet_D_19_W_24_T_229_params_152K_AUC_0_9433_somaR2_738__calibR2_9948.pt'
-        pretrained_model_name = f'{selected_folder_name}_TCN_ResNet_D_23_W_32_T_185_params_226K_AUC_0_9553_somaR2_789__calibR2_9977.pt'
+    # BallAndStickNeuron: small dendrite (~0.1 times lambda) - with AMPA synapses (basically a point neuron)
+    if selected_folder_name == r"BallAndStickNeuron_Soma_Hay2011_Dend_Lxd_128um_x_4_0um_8segs":
+        pretrained_model_name = f'{selected_folder_name}_TCN_D_6_W_16_T_221_params_58K_AUC_0_9981_somaR2_910__calibR2_9903.pt'
 
     # Load the GT neuron model
-    FF_neuron_file = glob.glob(os.path.join(selected_data_folder, '*.pkl'))[0]
-    ff_neuron = MultiBranchFilterAndFireNeuron.load(FF_neuron_file)
+    BS_neuron_file = glob.glob(os.path.join(selected_data_folder, '*.pkl'))[0]
+    bs_neuron = BallAndStickNeuron.load(BS_neuron_file)
 
     pretrained_model_path = os.path.join(selected_model_folder, pretrained_model_name)
 
@@ -1239,12 +1205,12 @@ if __name__ == "__main__":
     print('------------------------------------------------------------------------------------------------')
     print(f"Selected folder name: {selected_folder_name}")
     print('------------------------------------------------------------------------------------------------')
-    print(f"neuron model filename: {os.path.basename(FF_neuron_file)}")
+    print(f"neuron model filename: {os.path.basename(BS_neuron_file)}")
     print(f"twin model filename  : {os.path.basename(pretrained_model_path)}")
     print('------------------------------------------------------------------------------------------------')
     print(f"Corresponding data folder path:\n   {os.path.dirname(selected_data_folder)}")
     print(f"Selected model folder path:\n   {os.path.dirname(pretrained_model_path)}")
-    print(f"Corresponding FF neuron model path:\n   {os.path.dirname(FF_neuron_file)}")
+    print(f"Corresponding BS neuron model path:\n   {os.path.dirname(BS_neuron_file)}")
     print('------------------------------------------------------------------------------------------------')
 
     # Load the model
@@ -1261,14 +1227,12 @@ if __name__ == "__main__":
 
     # Set up data folders
     valid_data_folder = os.path.join(selected_data_folder, 'valid')
-    # valid_data_folder = os.path.join(selected_data_folder, 'valid_aug')
-    # valid_data_folder = os.path.join(selected_data_folder, 'valid_orig')
     test_data_folder = os.path.join(selected_data_folder, 'test')
     
     # Create validation dataset
     print("Creating validation dataset...")
     valid_time_window_size = 7168 + 512
-    valid_dataset = FFNeuronDataset(valid_data_folder, valid_time_window_size, preload_data=False)
+    valid_dataset = BSNeuronDataset(valid_data_folder, valid_time_window_size, preload_data=False)
     print(f"Validation dataset created with {len(valid_dataset)} samples")
     
     # Evaluate model on validation set
@@ -1281,9 +1245,9 @@ if __name__ == "__main__":
     plt.show()
     
     # Display per-simulation metrics
-    print("Displaying per-simulation metrics...")
-    fig2 = plot_per_simulation_metrics(valid_metrics_dict)
-    plt.show()
+    # print("Displaying per-simulation metrics...")
+    # fig2 = plot_per_simulation_metrics(valid_metrics_dict)
+    # plt.show()
     
     # Test calibration
     print("Testing model calibration...")
@@ -1302,11 +1266,11 @@ if __name__ == "__main__":
     print("Displaying sample predictions...")
     
     # Minimal sample display
-    fig4 = display_sample_predictions_minimal(model, test_data_folder, ff_neuron)
+    fig4 = display_sample_predictions_minimal(model, test_data_folder, bs_neuron)
     plt.show()
     
     # Full sample display
-    fig5 = display_sample_predictions_full(model, test_data_folder, ff_neuron)
+    fig5 = display_sample_predictions_full(model, test_data_folder, bs_neuron)
     plt.show()
     
 
@@ -1317,16 +1281,16 @@ if __name__ == "__main__":
     print('--------------------------------------------------------------------')
     
     # Extract neuron parameters for compatibility with both FF and BS neurons
-    if hasattr(ff_neuron, 'v_threshold'):
+    if hasattr(bs_neuron, 'v_threshold'):
         # Filter and Fire neuron
-        manual_neuron_v_threshold = ff_neuron.v_threshold
-        manual_neuron_v_reset = ff_neuron.v_reset
-        manual_neuron_v_hard_reset = ff_neuron.v_hard_reset
-    elif hasattr(ff_neuron, 'spike_detection_threshold_mV'):
+        manual_neuron_v_threshold = bs_neuron.v_threshold
+        manual_neuron_v_reset = bs_neuron.v_reset
+        manual_neuron_v_hard_reset = bs_neuron.v_hard_reset
+    elif hasattr(bs_neuron, 'spike_detection_threshold_mV'):
         # Ball and Stick neuron
-        manual_neuron_v_threshold = ff_neuron.soma_voltage_cap_mV
-        manual_neuron_v_reset = ff_neuron.epas_mV
-        manual_neuron_v_hard_reset = ff_neuron.epas_mV - 5
+        manual_neuron_v_threshold = bs_neuron.soma_voltage_cap_mV
+        manual_neuron_v_reset = bs_neuron.epas_mV
+        manual_neuron_v_hard_reset = bs_neuron.epas_mV - 5
     else:
         # Fallback for unknown neuron type
         manual_neuron_v_threshold = 0.0
@@ -1356,7 +1320,7 @@ if __name__ == "__main__":
     X_inh_axons = np.random.rand(num_axons, T_manual) < inh_spike_prob
     
     # Create mixing matrices for all segments
-    total_segments = getattr(ff_neuron, 'total_segments', getattr(ff_neuron, 'num_segments', 4))
+    total_segments = getattr(bs_neuron, 'total_segments', getattr(bs_neuron, 'num_segments', 4))
     exc_mixing_matrix = mixing_multiplier * np.power(np.random.rand(total_segments, num_axons), mixing_power)
     inh_mixing_matrix = mixing_multiplier * np.power(np.random.rand(total_segments, num_axons), mixing_power)
     
@@ -1368,13 +1332,13 @@ if __name__ == "__main__":
     
     # Simulate real FF neuron
     print("Simulating real FF neuron...")
-    ff_simulation_output = ff_neuron.simulate(X_exc_manual, X_inh_manual)
+    bs_simulation_output = bs_neuron.simulate(X_exc_manual, X_inh_manual)
     
-    y_spike_ff = ff_simulation_output['y_spike'].astype(np.float32)
-    y_soma_ff = ff_simulation_output['y_soma'].astype(np.float32)
-    y_near_spike_ff = ff_simulation_output['y_near_spike'].astype(np.float32)
-    y_inst_rate_ff = ff_simulation_output['y_inst_rate'].astype(np.float32)
-    y_dend_v_ff = ff_simulation_output['branch_voltages'].astype(np.float32)
+    y_spike_bs = bs_simulation_output['y_spike'].astype(np.float32)
+    y_soma_bs = bs_simulation_output['y_soma'].astype(np.float32)
+    y_near_spike_bs = bs_simulation_output['y_near_spike'].astype(np.float32)
+    y_inst_rate_bs = bs_simulation_output['y_inst_rate'].astype(np.float32)
+    y_dend_v_bs = bs_simulation_output['branch_voltages'].astype(np.float32)
     
     # Prepare input for twin model (channels first format)
     X_inputs_manual = np.stack([X_exc_manual, X_inh_manual], axis=-1)  # Shape: (segments, T, 2)
@@ -1395,48 +1359,48 @@ if __name__ == "__main__":
         y_dend_v_pred_manual = y_dend_v_pred_manual.squeeze().cpu().numpy() * model.V_scale_dend + model.V_bias_dend
     
     # Handle dendritic voltage dimensions
-    if len(y_dend_v_ff.shape) == 2 and y_dend_v_ff.shape[0] == 1:
-        y_dend_v_ff = y_dend_v_ff.squeeze(0)
+    if len(y_dend_v_bs.shape) == 2 and y_dend_v_bs.shape[0] == 1:
+        y_dend_v_bs = y_dend_v_bs.squeeze(0)
         y_dend_v_pred_manual = y_dend_v_pred_manual.squeeze(0) if len(y_dend_v_pred_manual.shape) > 1 else y_dend_v_pred_manual
     
     # Calculate metrics for this manual comparison
     spike_threshold_for_plot = 0.5
-    spike_times_ff = np.where(y_spike_ff)[0]
+    spike_times_bs = np.where(y_spike_bs)[0]
     spike_times_pred = np.where(y_spikes_pred_manual > spike_threshold_for_plot)[0]
     
     # Spike prediction metrics
     spike_pred_binary = y_spikes_pred_manual > spike_threshold_for_plot
-    y_spike_ff_bool = y_spike_ff.astype(bool)  # Cast to bool only for bitwise operations
-    true_positives = np.sum(spike_pred_binary & y_spike_ff_bool)
-    false_positives = np.sum(spike_pred_binary & ~y_spike_ff_bool)
-    false_negatives = np.sum(~spike_pred_binary & y_spike_ff_bool)
+    y_spike_bs_bool = y_spike_bs.astype(bool)  # Cast to bool only for bitwise operations
+    true_positives = np.sum(spike_pred_binary & y_spike_bs_bool)
+    false_positives = np.sum(spike_pred_binary & ~y_spike_bs_bool)
+    false_negatives = np.sum(~spike_pred_binary & y_spike_bs_bool)
     precision = true_positives / (true_positives + false_positives) if (true_positives + false_positives) > 0 else 0
     recall = true_positives / (true_positives + false_negatives) if (true_positives + false_negatives) > 0 else 0
-    total_num_of_ff_spikes = np.sum(y_spike_ff)
-    avg_spike_rate = 1000 * total_num_of_ff_spikes / len(y_spike_ff)
+    total_num_of_bs_spikes = np.sum(y_spike_bs)
+    avg_spike_rate = 1000 * total_num_of_bs_spikes / len(y_spike_bs)
     
-    if total_num_of_ff_spikes > 0:
-        spike_auc_score = roc_auc_score(y_spike_ff, y_spikes_pred_manual)
+    if total_num_of_bs_spikes > 0:
+        spike_auc_score = roc_auc_score(y_spike_bs, y_spikes_pred_manual)
     else:
         spike_auc_score = 0.0
     
     # Other metrics
-    soma_mae = np.mean(np.abs(y_soma_ff - y_soma_pred_manual))
-    soma_rmse = np.sqrt(np.mean((y_soma_ff - y_soma_pred_manual)**2))
-    soma_r2 = 1 - np.sum((y_soma_ff - y_soma_pred_manual)**2) / np.sum((y_soma_ff - np.mean(y_soma_ff))**2)
+    soma_mae = np.mean(np.abs(y_soma_bs - y_soma_pred_manual))
+    soma_rmse = np.sqrt(np.mean((y_soma_bs - y_soma_pred_manual)**2))
+    soma_r2 = 1 - np.sum((y_soma_bs - y_soma_pred_manual)**2) / np.sum((y_soma_bs - np.mean(y_soma_bs))**2)
     
-    near_spike_auc = roc_auc_score(y_near_spike_ff, y_near_spike_pred_manual) if np.sum(y_near_spike_ff) > 0 else 0.0
+    near_spike_auc = roc_auc_score(y_near_spike_bs, y_near_spike_pred_manual) if np.sum(y_near_spike_bs) > 0 else 0.0
     
-    inst_rate_mae = np.mean(np.abs(y_inst_rate_ff - y_inst_rate_pred_manual))
-    inst_rate_rmse = np.sqrt(np.mean((y_inst_rate_ff - y_inst_rate_pred_manual)**2))
-    inst_rate_r2 = 1 - np.sum((y_inst_rate_ff - y_inst_rate_pred_manual)**2) / np.sum((y_inst_rate_ff - np.mean(y_inst_rate_ff))**2)
+    inst_rate_mae = np.mean(np.abs(y_inst_rate_bs - y_inst_rate_pred_manual))
+    inst_rate_rmse = np.sqrt(np.mean((y_inst_rate_bs - y_inst_rate_pred_manual)**2))
+    inst_rate_r2 = 1 - np.sum((y_inst_rate_bs - y_inst_rate_pred_manual)**2) / np.sum((y_inst_rate_bs - np.mean(y_inst_rate_bs))**2)
     
-    dend_v_mae = np.mean(np.abs(y_dend_v_ff - y_dend_v_pred_manual))
-    dend_v_rmse = np.sqrt(np.mean((y_dend_v_ff - y_dend_v_pred_manual)**2))
-    dend_v_r2 = 1 - np.sum((y_dend_v_ff - y_dend_v_pred_manual)**2) / np.sum((y_dend_v_ff - np.mean(y_dend_v_ff))**2)
+    dend_v_mae = np.mean(np.abs(y_dend_v_bs - y_dend_v_pred_manual))
+    dend_v_rmse = np.sqrt(np.mean((y_dend_v_bs - y_dend_v_pred_manual)**2))
+    dend_v_r2 = 1 - np.sum((y_dend_v_bs - y_dend_v_pred_manual)**2) / np.sum((y_dend_v_bs - np.mean(y_dend_v_bs))**2)
     
     print(f"Manual comparison metrics:")
-    print(f"  Total FF spikes: {total_num_of_ff_spikes} ({avg_spike_rate:.2f} Hz)")
+    print(f"  Total BS spikes: {total_num_of_bs_spikes} ({avg_spike_rate:.2f} Hz)")
     print(f"  Spike prediction - Precision: {precision:.4f}, Recall: {recall:.4f}, AUC: {spike_auc_score:.4f}")
     print(f"  Soma voltage - RMSE: {soma_rmse:.2f} mV, R²: {soma_r2:.4f}")
     print(f"  Near spike - AUC: {near_spike_auc:.4f}")
@@ -1448,7 +1412,7 @@ if __name__ == "__main__":
     
     # Select random zoom window
     zoomin_duration_ms = 512
-    max_start_time = len(y_spike_ff) - zoomin_duration_ms
+    max_start_time = len(y_spike_bs) - zoomin_duration_ms
     zoom_start_time = np.random.randint(0, max_start_time)
     zoom_end_time = zoom_start_time + zoomin_duration_ms
     
@@ -1458,7 +1422,7 @@ if __name__ == "__main__":
     plt.subplots_adjust(hspace=0.4, wspace=0.3)
     
     # Get segment offsets for input visualization
-    seg_offsets_vec = 5 * np.arange(getattr(ff_neuron, 'total_segments', getattr(ff_neuron, 'num_segments', 4)))
+    seg_offsets_vec = 5 * np.arange(getattr(bs_neuron, 'total_segments', getattr(bs_neuron, 'num_segments', 4)))
     
     # 1. Plot mixed input signals (full and zoomed)
     ax1_full = plt.subplot(gs[0, 0])
@@ -1487,7 +1451,7 @@ if __name__ == "__main__":
     # 2. Plot output spikes (full and zoomed)
     ax2_full = plt.subplot(gs[1, 0])
     ax2_full.plot(y_spikes_pred_manual, 'cyan', alpha=0.7, label='Twin Model Prob.')
-    ax2_full.scatter(spike_times_ff, [1.2] * len(spike_times_ff), c='purple', marker='|', 
+    ax2_full.scatter(spike_times_bs, [1.2] * len(spike_times_bs), c='purple', marker='|', 
                     s=200, label='FF Neuron Spikes')
     ax2_full.scatter(spike_times_pred, [1.0] * len(spike_times_pred), c='cyan', marker='|', 
                     s=200, label='Twin Predicted Spikes')
@@ -1506,7 +1470,7 @@ if __name__ == "__main__":
     
     ax2_zoom = plt.subplot(gs[1, 1])
     ax2_zoom.plot(y_spikes_pred_manual, 'cyan', alpha=0.7, label='Twin Model Prob.')
-    ax2_zoom.scatter(spike_times_ff, [1.2] * len(spike_times_ff), c='purple', marker='|', 
+    ax2_zoom.scatter(spike_times_bs, [1.2] * len(spike_times_bs), c='purple', marker='|', 
                     s=200, label='FF Neuron Spikes')
     ax2_zoom.scatter(spike_times_pred, [1.0] * len(spike_times_pred), c='cyan', marker='|', 
                     s=200, label='Twin Predicted Spikes')
@@ -1518,7 +1482,7 @@ if __name__ == "__main__":
     
     # 3. Plot soma voltage (full and zoomed)
     ax3_full = plt.subplot(gs[2, 0])
-    ax3_full.plot(y_soma_ff, 'purple', label='FF Neuron', linewidth=1.5)
+    ax3_full.plot(y_soma_bs, 'purple', label='BS Neuron', linewidth=1.5)
     ax3_full.plot(y_soma_pred_manual, 'cyan', label='Twin Model', alpha=0.8, linewidth=1.5)
     ax3_full.axhline(y=manual_neuron_v_threshold, color='gray', linestyle='--', alpha=0.8, label='Threshold')
     ax3_full.axhline(y=manual_neuron_v_reset, color='gray', linestyle=':', alpha=0.6, label='Reset')
@@ -1537,7 +1501,7 @@ if __name__ == "__main__":
     ax3_full.add_patch(rect3)
     
     ax3_zoom = plt.subplot(gs[2, 1])
-    ax3_zoom.plot(y_soma_ff, 'purple', label='FF Neuron', linewidth=1.5)
+    ax3_zoom.plot(y_soma_bs, 'purple', label='BS Neuron', linewidth=1.5)
     ax3_zoom.plot(y_soma_pred_manual, 'cyan', label='Twin Model', alpha=0.8, linewidth=1.5)
     ax3_zoom.axhline(y=manual_neuron_v_threshold, color='gray', linestyle='--', alpha=0.8, label='Threshold')
     ax3_zoom.axhline(y=manual_neuron_v_reset, color='gray', linestyle=':', alpha=0.6, label='Reset')
@@ -1550,7 +1514,7 @@ if __name__ == "__main__":
     
     # 4. Plot near spike predictions (full and zoomed)
     ax4_full = plt.subplot(gs[3, 0])
-    ax4_full.plot(y_near_spike_ff, 'purple', label='FF Neuron', linewidth=1.5)
+    ax4_full.plot(y_near_spike_bs, 'purple', label='BS Neuron', linewidth=1.5)
     ax4_full.plot(y_near_spike_pred_manual, 'cyan', label='Twin Model', alpha=0.8, linewidth=1.5)
     ax4_full.set_xlim(0, T_manual)
     ax4_full.set_title(f'Near Spike Comparison (Full) - AUC = {near_spike_auc:.4f}')
@@ -1565,7 +1529,7 @@ if __name__ == "__main__":
     ax4_full.add_patch(rect4)
     
     ax4_zoom = plt.subplot(gs[3, 1])
-    ax4_zoom.plot(y_near_spike_ff, 'purple', label='FF Neuron', linewidth=1.5)
+    ax4_zoom.plot(y_near_spike_bs, 'purple', label='BS Neuron', linewidth=1.5)
     ax4_zoom.plot(y_near_spike_pred_manual, 'cyan', label='Twin Model', alpha=0.8, linewidth=1.5)
     ax4_zoom.set_xlim(zoom_start_time, zoom_end_time)
     ax4_zoom.set_title('Zoomed View')
@@ -1574,7 +1538,7 @@ if __name__ == "__main__":
     
     # 5. Plot instantaneous rate (full and zoomed)
     ax5_full = plt.subplot(gs[4, 0])
-    ax5_full.plot(y_inst_rate_ff, 'purple', label='FF Neuron', linewidth=1.5)
+    ax5_full.plot(y_inst_rate_bs, 'purple', label='BS Neuron', linewidth=1.5)
     ax5_full.plot(y_inst_rate_pred_manual, 'cyan', label='Twin Model', alpha=0.8, linewidth=1.5)
     ax5_full.set_xlim(0, T_manual)
     ax5_full.set_title(f'Instantaneous Rate Comparison (Full) - RMSE = {inst_rate_rmse:.4f}, R² = {inst_rate_r2:.4f}')
@@ -1589,7 +1553,7 @@ if __name__ == "__main__":
     ax5_full.add_patch(rect5)
     
     ax5_zoom = plt.subplot(gs[4, 1])
-    ax5_zoom.plot(y_inst_rate_ff, 'purple', label='FF Neuron', linewidth=1.5)
+    ax5_zoom.plot(y_inst_rate_bs, 'purple', label='BS Neuron', linewidth=1.5)
     ax5_zoom.plot(y_inst_rate_pred_manual, 'cyan', label='Twin Model', alpha=0.8, linewidth=1.5)
     ax5_zoom.set_xlim(zoom_start_time, zoom_end_time)
     ax5_zoom.set_title('Zoomed View')
@@ -1598,12 +1562,12 @@ if __name__ == "__main__":
     
     # 6. Plot dendritic voltage (full and zoomed)
     ax6_full = plt.subplot(gs[5, 0])
-    if y_dend_v_ff.ndim == 1:
-        ax6_full.plot(y_dend_v_ff, 'purple', linewidth=1.5, label='FF Neuron')
+    if y_dend_v_bs.ndim == 1:
+        ax6_full.plot(y_dend_v_bs, 'purple', linewidth=1.5, label='BS Neuron')
         ax6_full.plot(y_dend_v_pred_manual, 'cyan', alpha=0.8, linewidth=1.5, label='Twin Model')
     else:
-        for i in range(y_dend_v_ff.shape[0]):
-            ax6_full.plot(y_dend_v_ff[i], 'purple', linewidth=1.5, alpha=0.7)
+        for i in range(y_dend_v_bs.shape[0]):
+            ax6_full.plot(y_dend_v_bs[i], 'purple', linewidth=1.5, alpha=0.7)
             ax6_full.plot(y_dend_v_pred_manual[i], 'cyan', alpha=0.8, linewidth=1.5)
         # Add labels only once
         ax6_full.plot([], [], 'purple', linewidth=1.5, label='FF Neuron')
@@ -1624,12 +1588,12 @@ if __name__ == "__main__":
     ax6_full.add_patch(rect6)
     
     ax6_zoom = plt.subplot(gs[5, 1])
-    if y_dend_v_ff.ndim == 1:
-        ax6_zoom.plot(y_dend_v_ff, 'purple', linewidth=1.5)
+    if y_dend_v_bs.ndim == 1:
+        ax6_zoom.plot(y_dend_v_bs, 'purple', linewidth=1.5)
         ax6_zoom.plot(y_dend_v_pred_manual, 'cyan', alpha=0.8, linewidth=1.5)
     else:
-        for i in range(y_dend_v_ff.shape[0]):
-            ax6_zoom.plot(y_dend_v_ff[i], 'purple', linewidth=1.5, alpha=0.7)
+        for i in range(y_dend_v_bs.shape[0]):
+            ax6_zoom.plot(y_dend_v_bs[i], 'purple', linewidth=1.5, alpha=0.7)
             ax6_zoom.plot(y_dend_v_pred_manual[i], 'cyan', alpha=0.8, linewidth=1.5)
     
     ax6_zoom.set_xlim(zoom_start_time, zoom_end_time)
@@ -1638,7 +1602,7 @@ if __name__ == "__main__":
     ax6_zoom.spines['top'].set_visible(False)
     ax6_zoom.spines['right'].set_visible(False)
     
-    plt.suptitle('Manual Input: FF Neuron vs Twin Model Comparison', fontsize=16, y=0.98)
+    plt.suptitle('Manual Input: BS Neuron vs Twin Model Comparison', fontsize=16, y=0.98)
     plt.tight_layout()
     plt.show()
     
@@ -1646,7 +1610,7 @@ if __name__ == "__main__":
     print('---------------------------------------------------------')
     print('Manual comparison metrics for this simulation:')
     print('----------------------------------------------')
-    print(f'Total number of FF spikes: {total_num_of_ff_spikes} ({avg_spike_rate:.2f} Hz)')
+    print(f'Total number of BS spikes: {total_num_of_bs_spikes} ({avg_spike_rate:.2f} Hz)')
     
     print(f'Spike Detection:')
     print(f'  Precision: {precision:.4f}')

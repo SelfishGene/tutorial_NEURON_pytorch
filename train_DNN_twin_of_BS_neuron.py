@@ -16,13 +16,12 @@ from torch.nn import functional as F
 from neuron_model_ball_and_stick import BallAndStickNeuron
 from dataloader_BS_neuron import BSNeuronDataset
 from twin_model_definitions import SingleNeuronTwinModel_ResNetTCN, SingleNeuronTwinModel_TCN
-from twin_model_definitions import SingleNeuronTwinModel_ELM, SingleNeuronTwinModel_recurrent_TCN
-from twin_model_definitions import SingleNeuronTwinModel_TCN_ELM, SingleNeuronTwinModel_Transformer
+from twin_model_definitions import SingleNeuronTwinModel_ELM, SingleNeuronTwinModel_Transformer
 import config
 
 # Import evaluation functions
 from evaluate_twin_model import predict_on_all_simulations, evaluate_model_on_dataset
-from evaluate_twin_model import plot_evaluation_figures, plot_per_simulation_metrics
+from evaluate_twin_model import plot_evaluation_figures
 from evaluate_twin_model import display_sample_predictions_minimal, display_sample_predictions_full
 from evaluate_twin_model import calculate_calibration_metrics, display_calibration_figure
 
@@ -172,16 +171,11 @@ if __name__ == "__main__":
     valid_dataset = BSNeuronDataset(valid_data_folder, valid_time_window_size, preload_data=preload_data)
     test_dataset = BSNeuronDataset(test_data_folder, test_time_window_size, preload_data=preload_data)
     
-    if config.CURRENT_OS == 'windows':
-        train_dataloader = DataLoader(train_dataset, batch_size=train_batch_size, shuffle=True)
-        valid_dataloader = DataLoader(valid_dataset, batch_size=valid_batch_size)
-        test_dataloader = DataLoader(test_dataset, batch_size=test_batch_size)
-    elif config.CURRENT_OS == 'linux':
-        # num_workers = 8
-        num_workers = 0
-        train_dataloader = DataLoader(train_dataset, batch_size=train_batch_size, shuffle=True, num_workers=num_workers)
-        valid_dataloader = DataLoader(valid_dataset, batch_size=valid_batch_size, num_workers=num_workers)
-        test_dataloader = DataLoader(test_dataset, batch_size=test_batch_size, num_workers=num_workers)
+    # num_workers = 8
+    num_workers = 0
+    train_dataloader = DataLoader(train_dataset, batch_size=train_batch_size, shuffle=True, num_workers=num_workers)
+    valid_dataloader = DataLoader(valid_dataset, batch_size=valid_batch_size, num_workers=num_workers)
+    test_dataloader = DataLoader(test_dataset, batch_size=test_batch_size, num_workers=num_workers)
     
     # sample a batch to make sure dataloader works well
     print('----------------------------------------------------')
@@ -280,9 +274,9 @@ if __name__ == "__main__":
         # 1 block
         # num_layers_per_block_list = [3]
         # num_layers_per_block_list = [4]
-        # num_layers_per_block_list = [5]
+        num_layers_per_block_list = [5]
         # num_layers_per_block_list = [6]
-        num_layers_per_block_list = [7]
+        # num_layers_per_block_list = [7]
         # num_layers_per_block_list = [8]
         # num_layers_per_block_list = [9]
         # num_layers_per_block_list = [10]
@@ -290,9 +284,9 @@ if __name__ == "__main__":
         # num_layers_per_block_list = [15]
 
         # num_features_per_block_list = [8]
-        # num_features_per_block_list = [16]
+        num_features_per_block_list = [16]
         # num_features_per_block_list = [24]
-        num_features_per_block_list = [32]
+        # num_features_per_block_list = [32]
         # num_features_per_block_list = [40]
         # num_features_per_block_list = [48]
         # num_features_per_block_list = [64]
@@ -1688,10 +1682,6 @@ if __name__ == "__main__":
     # Plot evaluation figures
     fig = plot_evaluation_figures(valid_metrics_dict)
     plt.show()
-
-    # plot per simulation metrics
-    # fig = plot_per_simulation_metrics(valid_metrics_dict)
-    # plt.show()
 
     # store the evaluation metrics in the model metadata
     twin_model.set_metadata_eval_metrics(valid_metrics_dict)

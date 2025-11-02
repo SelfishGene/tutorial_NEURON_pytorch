@@ -545,16 +545,13 @@ if __name__ == "__main__":
     sim_T_ms = 1024
     
     # Generate random sparse input
-    exc_max_magnitude_factor_range = [2.0, 6.0]
-    inh_max_magnitude_factor_range = [2.0, 6.0]
-    exc_sparsity_level_range = [0.995, 0.999]
-    inh_sparsity_level_range = [0.995, 0.999]
+    exc_max_magnitude_factor = 5
+    # exc_sparsity_level = 0.998
+    exc_sparsity_level = 0.99999999
+    inh_max_magnitude_factor = 5
+    # inh_sparsity_level = 0.999
+    inh_sparsity_level = 0.99999999
 
-    exc_max_magnitude_factor = np.random.uniform(exc_max_magnitude_factor_range[0], exc_max_magnitude_factor_range[1])
-    exc_sparsity_level = np.random.uniform(exc_sparsity_level_range[0], exc_sparsity_level_range[1])
-    inh_max_magnitude_factor = np.random.uniform(inh_max_magnitude_factor_range[0], inh_max_magnitude_factor_range[1])
-    inh_sparsity_level = np.random.uniform(inh_sparsity_level_range[0], inh_sparsity_level_range[1])
-    
     X_exc_weighted_spikes = np.random.rand(ball_and_stick_neuron.num_segments, sim_T_ms) * exc_max_magnitude_factor
     X_exc_weighted_spikes[np.random.rand(ball_and_stick_neuron.num_segments, sim_T_ms) < exc_sparsity_level] = 0.0
     
@@ -562,7 +559,7 @@ if __name__ == "__main__":
     X_inh_weighted_spikes[np.random.rand(ball_and_stick_neuron.num_segments, sim_T_ms) < inh_sparsity_level] = 0.0
     
     # Add patterned excitatory spikes from proximal to distal and back
-    patterned_magnitude = 6.0
+    patterned_magnitude = 9.0
     X_exc_weighted_spikes[int(0.05 * ball_and_stick_neuron.num_segments), int(0.1 * sim_T_ms)] = patterned_magnitude
     X_exc_weighted_spikes[int(0.25 * ball_and_stick_neuron.num_segments), int(0.2 * sim_T_ms)] = patterned_magnitude
     X_exc_weighted_spikes[int(0.50 * ball_and_stick_neuron.num_segments), int(0.3 * sim_T_ms)] = patterned_magnitude
@@ -602,8 +599,15 @@ if __name__ == "__main__":
     print('----------------------------------------------')
     
     # Plot results
-    X_exc_weighted_spikes_normalized = X_exc_weighted_spikes / X_exc_weighted_spikes.max()
-    X_inh_weighted_spikes_normalized = X_inh_weighted_spikes / X_inh_weighted_spikes.max()
+    if X_exc_weighted_spikes.max() != 0:
+        X_exc_weighted_spikes_normalized = X_exc_weighted_spikes / X_exc_weighted_spikes.max()
+    else:
+        X_exc_weighted_spikes_normalized = X_exc_weighted_spikes
+
+    if X_inh_weighted_spikes.max() != 0:
+        X_inh_weighted_spikes_normalized = X_inh_weighted_spikes / X_inh_weighted_spikes.max()
+    else:
+        X_inh_weighted_spikes_normalized = X_inh_weighted_spikes
     
     # Create RGB image of input
     X_weighted_spikes_as_RGB = np.zeros((ball_and_stick_neuron.num_segments, sim_T_ms, 3))

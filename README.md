@@ -39,5 +39,3 @@ In order of how a new user would want to use the repo
 
 ### Configuration and Utilities
 - `config.py` - configuration file containing data and model paths, and other global settings can be added here
-
-- `various_utils.py` - various utility functions (non specific utilities)

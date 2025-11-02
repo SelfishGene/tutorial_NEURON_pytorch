@@ -2,7 +2,7 @@
 
 This repo will contain all of the code to support:  
 (1) Simulating Ball & Stick neurons using NEURON   
-(2) Training DNN twins of Ball & Stick neurons using pytorch  
+(2) Training DNN twins of single neuron models using pytorch  
 
 ## File breakdown of the repo 
 In order of how a new user would want to use the repo
@@ -25,16 +25,14 @@ In order of how a new user would want to use the repo
   - uses the `twin_model_definitions.py` for creating the DNN twin model
   - uses the `evaluate_twin_model.py` for functions to evaluate the trained model
 
-- `train_DNN_twin_of_FF_neuron_noTC.py` - identical to `train_DNN_twin_of_FF_neuron.py` but without talyor consistency loss
+- `dataloader_BS_neuron.py` - PyTorch DataLoader for efficiently loading neuron simulation data for training/evaluation
 
-- `dataloader_BS_neuron.py` - PyTorch DataLoader for efficiently loading Ball & Stick neuron simulation for training/evaluation
+- `evaluate_twin_model.py` - script that loads a previously trained twin model and evaluates it on a given neuron simulation dataset
 
-- `evaluate_twin_model.py` - script that loads a previously trained twin model and evaluates it on a given neuron simulation dataset - evaluates f(x) accuracy
-
-- `twin_model_definitions.py` - contains the class definitions for various DNN twin architectures. any new twin architectures should be added here (ELM, transformer, etc.)
+- `twin_model_definitions.py` - contains the class definitions for various DNN twin architectures.
   - uses the `torch_module_definitions.py` for the torch modules used in the twin models
 
-- `torch_module_definitions.py` - contains the class definitions for various torch modules used in the repo. any new torch modules that is not a full model should be added here
+- `torch_module_definitions.py` - contains the class definitions for various torch modules used in the repo.
 
 ### Configuration and Utilities
-- `config.py` - configuration file containing data and model paths, and other global settings can be added here
+- `config.py` - configuration file containing data and model paths, and other global settings

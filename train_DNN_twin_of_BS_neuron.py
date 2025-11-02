@@ -255,30 +255,30 @@ if __name__ == "__main__":
         # first_layer_temporal_kernel_size = 11
         # first_layer_temporal_kernel_size = 15
         # first_layer_temporal_kernel_size = 21
-        first_layer_temporal_kernel_size = 31
+        # first_layer_temporal_kernel_size = 31
         # first_layer_temporal_kernel_size = 41
-        # first_layer_temporal_kernel_size = 51
+        first_layer_temporal_kernel_size = 51
         # first_layer_temporal_kernel_size = 61
         # first_layer_temporal_kernel_size = 91
 
         # num_layers_per_block_list = [1]
         # num_layers_per_block_list = [2]
-        # num_layers_per_block_list = [4]
-        num_layers_per_block_list = [7]
+        num_layers_per_block_list = [4]
+        # num_layers_per_block_list = [7]
         # num_layers_per_block_list = [11]
 
         # num_features_per_block_list = [8]
         # num_features_per_block_list = [16]
         # num_features_per_block_list = [32]
-        # num_features_per_block_list = [48]
-        num_features_per_block_list = [64]
+        num_features_per_block_list = [48]
+        # num_features_per_block_list = [64]
         # num_features_per_block_list = [128]
 
         # temporal_kernel_size_per_block_list = [11]
         # temporal_kernel_size_per_block_list = [21]
-        temporal_kernel_size_per_block_list = [31]
+        # temporal_kernel_size_per_block_list = [31]
         # temporal_kernel_size_per_block_list = [41]
-        # temporal_kernel_size_per_block_list = [51]
+        temporal_kernel_size_per_block_list = [51]
         # temporal_kernel_size_per_block_list = [61]
         # temporal_kernel_size_per_block_list = [91]
 
@@ -1601,7 +1601,7 @@ if __name__ == "__main__":
     #%% check calibration of the model
     
     num_bins_per_simulation = 8
-    
+
     # fetch test data predictions (use the soma voltage predictions are as they are from model output)
     output_dict = predict_on_all_simulations(twin_model, test_dataset, batch_size=test_batch_size)
 

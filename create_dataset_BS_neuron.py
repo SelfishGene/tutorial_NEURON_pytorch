@@ -342,7 +342,7 @@ if __name__ == "__main__":
     
     # some high-level parameters
     # exc_synapse_type = 'AMPA'
-    # exc_synapse_type = 'NMDA (rat)'
+    # exc_synapse_type = 'NMDA (rodent)'
     exc_synapse_type = 'NMDA (human)' # larger NMDA:AMPA ratio, steeper NMDA voltage dependence 
 
     # SKE2 channel controls a very long hyperpolarizing current after a spike

@@ -531,12 +531,12 @@ def calculate_calibration_metrics(y_spikes_pred, y_spikes_gt, num_bins_per_simul
 
     return calib_corr, calib_explained_var
 
-def display_calibration_figure(y_spikes_pred, y_spikes_gt):
+def display_calibration_figure(y_spikes_pred, y_spikes_gt, num_bins_per_simulation=16):
 
     num_simulations, num_time_points = y_spikes_gt.shape
 
     # split the time axis into K bins and calculate the average firing rate in each bin
-    K = 16
+    K = num_bins_per_simulation
     bin_size = num_time_points // K
     y_spikes_pred = y_spikes_pred.reshape(num_simulations, K, bin_size)
     y_spikes_gt = y_spikes_gt.reshape(num_simulations, K, bin_size)
@@ -560,7 +560,7 @@ def display_calibration_figure(y_spikes_pred, y_spikes_gt):
     fig, axs = plt.subplots(2, 1, figsize=(8, 10), height_ratios=[3, 1])     
     fig.subplots_adjust(hspace=0.25)
     axs[0].scatter(y_spikes_gt.mean(axis=1), y_spikes_pred.mean(axis=1), s=1, label='Simulation')
-    axs[0].plot([0, 0.2], [0, 0.2], 'k--', label='y=x')
+    axs[0].plot([0, 0.06], [0, 0.06], 'k--', label='y=x')
     axs[0].set_xlabel('GT Avg Firing Rate (Spikes per ms = mean(y_spikes(t)))')
     axs[0].set_ylabel('Predicted Avg Firing Rate (Spikes per ms = mean(spike_prob(t)))')
     axs[0].set_title(f'{title_top_row}\n{title_bottom_row}')

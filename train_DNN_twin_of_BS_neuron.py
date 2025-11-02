@@ -49,10 +49,10 @@ if __name__ == "__main__":
 
     # select the data folder
     # BallAndStickNeuron: large dendrite (~3.5 times lambda) - with NMDA synapses
-    # data_folder_name = r"BallAndStickNeuron_Soma_Hay2011_Dend_Lxd_2048um_x_1_0um_8segs"
+    data_folder_name = r"BallAndStickNeuron_Soma_Hay2011_Dend_Lxd_2048um_x_1_0um_8segs"
 
     # BallAndStickNeuron: small dendrite (~0.1 times lambda) - with AMPA synapses (basically a point neuron)
-    data_folder_name = r"BallAndStickNeuron_Soma_Hay2011_Dend_Lxd_128um_x_4_0um_8segs"
+    # data_folder_name = r"BallAndStickNeuron_Soma_Hay2011_Dend_Lxd_128um_x_4_0um_8segs"
 
     data_folder = os.path.join(data_root, data_folder_name)
     train_data_folder = os.path.join(data_folder, 'train')
@@ -92,7 +92,6 @@ if __name__ == "__main__":
         # train_time_window_size = 768
         train_time_window_size = 1024
         valid_time_window_size = 2048
-        # valid_time_window_size = 3072
         # valid_time_window_size = 4096
         # valid_time_window_size = 7168 + 768
         test_time_window_size = 8192 - 64
@@ -102,7 +101,6 @@ if __name__ == "__main__":
         # train_time_window_size = 1024
         train_time_window_size = 1280
         valid_time_window_size = 2048
-        # valid_time_window_size = 3072
         # valid_time_window_size = 4096
         # valid_time_window_size = 7168 + 768
         test_time_window_size = 8192 - 64
@@ -110,7 +108,6 @@ if __name__ == "__main__":
         # train_time_window_size = 1024
         # train_time_window_size = 1536
         train_time_window_size = 2048
-        # valid_time_window_size = 3072
         valid_time_window_size = 4096
         # valid_time_window_size = 7168 + 768
         test_time_window_size = 8192 - 64
@@ -134,13 +131,11 @@ if __name__ == "__main__":
         # valid_batch_size = 64
         valid_batch_size = 32
 
-        # test_batch_size = 128
         test_batch_size = 32
 
     elif twin_model_type in ['Transformer']:
         # train_batch_size = 384
         # train_batch_size = 256
-        # train_batch_size = 192
         # train_batch_size = 128
         # train_batch_size = 64
         # train_batch_size = 32
@@ -152,7 +147,6 @@ if __name__ == "__main__":
     else:
         # train_batch_size = 384
         # train_batch_size = 256
-        # train_batch_size = 192
         # train_batch_size = 128
         # train_batch_size = 64
         # train_batch_size = 32
@@ -257,80 +251,38 @@ if __name__ == "__main__":
 
     if twin_model_type == 'TCN':
 
-        # first_layer_temporal_kernel_size = 5
         # first_layer_temporal_kernel_size = 7
-        # first_layer_temporal_kernel_size = 9
         # first_layer_temporal_kernel_size = 11
-        # first_layer_temporal_kernel_size = 13
         # first_layer_temporal_kernel_size = 15
-        # first_layer_temporal_kernel_size = 17
         # first_layer_temporal_kernel_size = 21
-        # first_layer_temporal_kernel_size = 31
-        first_layer_temporal_kernel_size = 41
+        first_layer_temporal_kernel_size = 31
+        # first_layer_temporal_kernel_size = 41
         # first_layer_temporal_kernel_size = 51
         # first_layer_temporal_kernel_size = 61
-        # first_layer_temporal_kernel_size = 81
+        # first_layer_temporal_kernel_size = 91
 
-        # 1 block
-        num_layers_per_block_list = [3]
+        # num_layers_per_block_list = [1]
+        # num_layers_per_block_list = [2]
         # num_layers_per_block_list = [4]
-        # num_layers_per_block_list = [5]
-        # num_layers_per_block_list = [6]
-        # num_layers_per_block_list = [7]
-        # num_layers_per_block_list = [8]
-        # num_layers_per_block_list = [9]
-        # num_layers_per_block_list = [10]
+        num_layers_per_block_list = [7]
         # num_layers_per_block_list = [11]
-        # num_layers_per_block_list = [15]
 
         # num_features_per_block_list = [8]
-        num_features_per_block_list = [16]
-        # num_features_per_block_list = [24]
+        # num_features_per_block_list = [16]
         # num_features_per_block_list = [32]
-        # num_features_per_block_list = [40]
         # num_features_per_block_list = [48]
-        # num_features_per_block_list = [64]
-        # num_features_per_block_list = [96]
+        num_features_per_block_list = [64]
         # num_features_per_block_list = [128]
 
-        # temporal_kernel_size_per_block_list = [5]
-        # temporal_kernel_size_per_block_list = [9]
         # temporal_kernel_size_per_block_list = [11]
-        # temporal_kernel_size_per_block_list = [13]
-        # temporal_kernel_size_per_block_list = [15]
-        # temporal_kernel_size_per_block_list = [23]
-        # temporal_kernel_size_per_block_list = [25]
-        # temporal_kernel_size_per_block_list = [27]
-        # temporal_kernel_size_per_block_list = [29]
-        # temporal_kernel_size_per_block_list = [31]
-        # temporal_kernel_size_per_block_list = [33]
-        # temporal_kernel_size_per_block_list = [35]
-        # temporal_kernel_size_per_block_list = [37]
-        # temporal_kernel_size_per_block_list = [39]
+        # temporal_kernel_size_per_block_list = [21]
+        temporal_kernel_size_per_block_list = [31]
         # temporal_kernel_size_per_block_list = [41]
-        # temporal_kernel_size_per_block_list = [47]
-        temporal_kernel_size_per_block_list = [51]
+        # temporal_kernel_size_per_block_list = [51]
         # temporal_kernel_size_per_block_list = [61]
+        # temporal_kernel_size_per_block_list = [91]
 
         temporal_dilation_per_block_list = [1]
-
-        # 2 blocks
-        # num_layers_per_block_list = [2, 2]
-        # num_layers_per_block_list = [3, 3]
-        # num_layers_per_block_list = [4, 4]
-        # num_layers_per_block_list = [6, 6]
-
-        # num_features_per_block_list = [16, 16]
-        # num_features_per_block_list = [32, 32]
-        # num_features_per_block_list = [48, 48]
-        # num_features_per_block_list = [64, 64]
-        # num_features_per_block_list = [128, 64]
-        # num_features_per_block_list = [128, 128]
-
-        # temporal_kernel_size_per_block_list = [13, 31]
-        # temporal_kernel_size_per_block_list = [17, 41]
-
-        # temporal_dilation_per_block_list = [1, 1]
 
         # norm_type = 'BatchNorm_B_only'
         # norm_type = 'BatchNorm'
@@ -345,10 +297,6 @@ if __name__ == "__main__":
         # nonlinearity_str = 'leaky_tanh'
         # nonlinearity_str = 'leaky_sigmoid'
 
-        # leaky_slope = 0.5
-        # leaky_slope = 0.4
-        # leaky_slope = 0.3
-        # leaky_slope = 0.25
         # leaky_slope = 0.2
         leaky_slope = 0.15
         # leaky_slope = 0.1
@@ -443,53 +391,6 @@ if __name__ == "__main__":
 
         temporal_dilation_per_block_list = [1]
 
-        # 2 blocks
-        # num_miniblocks_per_block_list = [1, 1]
-        # num_miniblocks_per_block_list = [2, 1]
-        # num_miniblocks_per_block_list = [3, 1]
-        # num_miniblocks_per_block_list = [2, 3]
-        # num_miniblocks_per_block_list = [2, 2]
-        # num_features_per_block_list = [4, 4]
-        # num_features_per_block_list = [6, 6]
-        # num_features_per_block_list = [8, 8]
-        # num_features_per_block_list = [12, 12]
-        # num_features_per_block_list = [16, 16]
-        # num_features_per_block_list = [24, 24]
-        # num_features_per_block_list = [32, 32]
-        # num_features_per_block_list = [48, 48]
-        # num_features_per_block_list = [64, 64]
-        # num_features_per_block_list = [128, 128]
-        # temporal_kernel_size_per_block_list = [61, 61]
-        # temporal_kernel_size_per_block_list = [31, 41]
-        # temporal_kernel_size_per_block_list = [31, 31]
-        # temporal_kernel_size_per_block_list = [41, 41]
-        # temporal_kernel_size_per_block_list = [41, 61]
-        # temporal_kernel_size_per_block_list = [31, 51]
-        # temporal_kernel_size_per_block_list = [31, 41]
-        # temporal_kernel_size_per_block_list = [21, 21]
-        # temporal_kernel_size_per_block_list = [23, 23]
-        # temporal_kernel_size_per_block_list = [21, 31]
-        # temporal_kernel_size_per_block_list = [21, 41]
-        # temporal_kernel_size_per_block_list = [17, 29]
-        # temporal_kernel_size_per_block_list = [15, 25]
-        # temporal_kernel_size_per_block_list = [15, 43]
-        # temporal_dilation_per_block_list = [1, 1]
-
-        # 3 blocks
-        # num_miniblocks_per_block_list = [2, 2, 2]
-        # num_features_per_block_list = [8, 8, 8]
-        # num_features_per_block_list = [16, 16, 16]
-        # num_features_per_block_list = [24, 24, 24]
-        # num_features_per_block_list = [32, 32, 32]
-        # num_features_per_block_list = [40, 40, 40]
-        # num_features_per_block_list = [48, 48, 48]
-        # num_features_per_block_list = [64, 64, 64]
-        # num_features_per_block_list = [80, 80, 80]
-        # num_features_per_block_list = [96, 96, 96]
-        # temporal_kernel_size_per_block_list = [9, 19, 29]
-        # temporal_kernel_size_per_block_list = [9, 17, 25]
-        # temporal_dilation_per_block_list = [1, 1, 1]
-
         # norm_type = 'BatchNorm_B_only'
         # norm_type = 'BatchNorm'
         # norm_type = 'LayerNorm'
@@ -503,8 +404,6 @@ if __name__ == "__main__":
         # nonlinearity_str = 'leaky_tanh'
         # nonlinearity_str = 'leaky_sigmoid'
 
-        # leaky_slope = 0.5
-        # leaky_slope = 0.4
         # leaky_slope = 0.3
         # leaky_slope = 0.2
         leaky_slope = 0.15
@@ -541,9 +440,9 @@ if __name__ == "__main__":
 
         # ELM-specific parameters
         # memory_dim = 32
-        # memory_dim = 64
+        memory_dim = 64
         # memory_dim = 96
-        memory_dim = 128
+        # memory_dim = 128
         # memory_dim = 256
 
         mlp_num_hidden_layers = 1
@@ -678,8 +577,8 @@ if __name__ == "__main__":
         # d_model = 16
         # d_model = 24
         # d_model = 32
-        # d_model = 48
-        d_model = 64
+        d_model = 48
+        # d_model = 64
         # d_model = 96
         # d_model = 128
         # d_model = 192
@@ -687,15 +586,15 @@ if __name__ == "__main__":
 
         # n_heads = 2
         # n_heads = 4
-        # n_heads = 6
-        n_heads = 8
+        n_heads = 6
+        # n_heads = 8
         # n_heads = 16
 
         # num_layers = 2
         # num_layers = 3
         # num_layers = 4
-        # num_layers = 5
-        num_layers = 6
+        num_layers = 5
+        # num_layers = 6
         # num_layers = 6
         # num_layers = 8
 
@@ -802,9 +701,9 @@ if __name__ == "__main__":
     # num_epochs = 240
     # num_epochs = 200
     # num_epochs = 180
-    num_epochs = 150
+    # num_epochs = 150
     # num_epochs = 120
-    # num_epochs = 100
+    num_epochs = 100
     # num_epochs = 80
     # num_epochs = 70
     # num_epochs = 60
@@ -844,17 +743,15 @@ if __name__ == "__main__":
     # max_grad_norm = 0.1
 
     # weight_decay = 0.5000
-    # weight_decay = 0.3000
     # weight_decay = 0.2000
-    # weight_decay = 0.1500
     # weight_decay = 0.1000
     # weight_decay = 0.0500
     # weight_decay = 0.0300
     # weight_decay = 0.0200
     # weight_decay = 0.0100
     # weight_decay = 0.0050
-    weight_decay = 0.0030
-    # weight_decay = 0.0010
+    # weight_decay = 0.0030
+    weight_decay = 0.0010
     # weight_decay = 0.0001
     # weight_decay = 0.0000
 
@@ -1703,18 +1600,19 @@ if __name__ == "__main__":
 
     #%% check calibration of the model
     
-    # fetch validation data (use the soma voltage predictions are as they are from model output)
-    # output_dict = predict_on_all_simulations(twin_model, valid_dataset, batch_size=valid_batch_size)
+    num_bins_per_simulation = 8
+    
+    # fetch test data predictions (use the soma voltage predictions are as they are from model output)
     output_dict = predict_on_all_simulations(twin_model, test_dataset, batch_size=test_batch_size)
 
     y_spikes_pred = output_dict['y_spikes_pred']
     y_spikes_gt = output_dict['y_spikes_gt']
 
-    calib_corr, calib_explained_var = calculate_calibration_metrics(y_spikes_pred, y_spikes_gt, num_bins_per_simulation=8)
+    calib_corr, calib_explained_var = calculate_calibration_metrics(y_spikes_pred, y_spikes_gt, num_bins_per_simulation=num_bins_per_simulation)
     print(f'Calibration Correlation: {calib_corr:.4f}')
     print(f'Calibration Explained Variance Percent: {100 * calib_explained_var:.2f}%')
 
-    fig = display_calibration_figure(y_spikes_pred, y_spikes_gt)
+    fig = display_calibration_figure(y_spikes_pred, y_spikes_gt, num_bins_per_simulation=num_bins_per_simulation)
     plt.show()
 
     #%% Save model

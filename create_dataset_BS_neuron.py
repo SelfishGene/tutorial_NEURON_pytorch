@@ -341,9 +341,9 @@ if __name__ == "__main__":
     # --------------------------------------------------------------------
     
     # some high-level parameters
-    exc_synapse_type = 'AMPA'
+    # exc_synapse_type = 'AMPA'
     # exc_synapse_type = 'NMDA (rat)'
-    # exc_synapse_type = 'NMDA (human)' # larger NMDA:AMPA ratio, steeper NMDA voltage dependence 
+    exc_synapse_type = 'NMDA (human)' # larger NMDA:AMPA ratio, steeper NMDA voltage dependence 
 
     # SKE2 channel controls a very long hyperpolarizing current after a spike
     disable_SKE2_channel = True
@@ -355,12 +355,12 @@ if __name__ == "__main__":
     soma_diam_um = 25.0
 
     # large dendrite (~3.5 times lambda)
-    # dend_L_um = 2048.0
-    # dend_diam_um = 1.0
+    dend_L_um = 2048.0
+    dend_diam_um = 1.0
 
     # small dendrite (~0.1 times lambda) - basically a point neuron
-    dend_L_um = 128.0
-    dend_diam_um = 4.0
+    # dend_L_um = 128.0
+    # dend_diam_um = 4.0
 
     # passive biophysics
     Ra_ohm_cm = 150.0
@@ -474,8 +474,8 @@ if __name__ == "__main__":
     # num_repeats = 0
     # num_repeats = 1
     # num_repeats = 2
-    # num_repeats = 4
-    num_repeats = 8
+    num_repeats = 4
+    # num_repeats = 8
     # num_repeats = 16
     # num_repeats = 32
     # num_repeats = 64

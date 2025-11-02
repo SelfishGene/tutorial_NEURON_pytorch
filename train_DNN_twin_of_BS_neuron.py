@@ -49,10 +49,10 @@ if __name__ == "__main__":
 
     # select the data folder
     # BallAndStickNeuron: large dendrite (~3.5 times lambda) - with NMDA synapses
-    data_folder_name = r"BallAndStickNeuron_Soma_Hay2011_Dend_Lxd_2048um_x_1_0um_8segs"
+    # data_folder_name = r"BallAndStickNeuron_Soma_Hay2011_Dend_Lxd_2048um_x_1_0um_8segs"
 
     # BallAndStickNeuron: small dendrite (~0.1 times lambda) - with AMPA synapses (basically a point neuron)
-    # data_folder_name = r"BallAndStickNeuron_Soma_Hay2011_Dend_Lxd_128um_x_4_0um_8segs"
+    data_folder_name = r"BallAndStickNeuron_Soma_Hay2011_Dend_Lxd_128um_x_4_0um_8segs"
 
     data_folder = os.path.join(data_root, data_folder_name)
     train_data_folder = os.path.join(data_folder, 'train')
@@ -265,16 +265,16 @@ if __name__ == "__main__":
         # first_layer_temporal_kernel_size = 15
         # first_layer_temporal_kernel_size = 17
         # first_layer_temporal_kernel_size = 21
-        first_layer_temporal_kernel_size = 31
-        # first_layer_temporal_kernel_size = 41
+        # first_layer_temporal_kernel_size = 31
+        first_layer_temporal_kernel_size = 41
         # first_layer_temporal_kernel_size = 51
         # first_layer_temporal_kernel_size = 61
         # first_layer_temporal_kernel_size = 81
 
         # 1 block
-        # num_layers_per_block_list = [3]
+        num_layers_per_block_list = [3]
         # num_layers_per_block_list = [4]
-        num_layers_per_block_list = [5]
+        # num_layers_per_block_list = [5]
         # num_layers_per_block_list = [6]
         # num_layers_per_block_list = [7]
         # num_layers_per_block_list = [8]
@@ -306,10 +306,10 @@ if __name__ == "__main__":
         # temporal_kernel_size_per_block_list = [33]
         # temporal_kernel_size_per_block_list = [35]
         # temporal_kernel_size_per_block_list = [37]
-        temporal_kernel_size_per_block_list = [39]
+        # temporal_kernel_size_per_block_list = [39]
         # temporal_kernel_size_per_block_list = [41]
         # temporal_kernel_size_per_block_list = [47]
-        # temporal_kernel_size_per_block_list = [51]
+        temporal_kernel_size_per_block_list = [51]
         # temporal_kernel_size_per_block_list = [61]
 
         temporal_dilation_per_block_list = [1]

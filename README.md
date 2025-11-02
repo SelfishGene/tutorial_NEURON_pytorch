@@ -8,9 +8,9 @@ This repo will contain all of the code to support:
 In order of how a new user would want to use the repo
 
 ## Notebooks
-- simulate a single Ball & Stick neuron and plot the simulation results
-- create a dataset of Ball & Stick neurons and plot the dataset statistics
-- train a DNN twin of a Ball & Stick neuron and plot the training results
+- `simulate_ball_and_stick_neuron.ipynb` - Tutorial for building and simulating ball-and-stick neuron models using NEURON simulator with Hay2011 active conductances, demonstrating the effect of dendritic length on spatial integration.
+- `create_dataset_BS_neuron.ipynb` - Generate training/validation/test datasets by simulating Ball & Stick neurons with randomized input patterns, post-processing filtering, and visualizing dataset statistics.
+- `train_DNN_twin_of_BS_neuron.ipynb` - Train deep neural networks (TCN, ResNetTCN, ELM, or Transformer) to act as fast approximations of biophysical neuron models, with multi-task learning for spikes, voltages, and firing rates.
 
 ### Single Neuron Model
 - `neuron_model_ball_and_stick.py` - Implementation of the Ball & Stick neuron model with synaptic filtering, dendritic branching, and various nonlinearities (NMDA-like, AMPA-like, two sided saturation)

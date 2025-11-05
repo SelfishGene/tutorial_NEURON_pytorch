@@ -49,3 +49,19 @@ In order of how a new user would want to use the repo
 
 ### Configuration and Utilities
 - `config.py` - configuration file containing data and model paths, and other global settings
+
+## Acknowledgments and References
+
+This work builds upon and inspired by:
+
+
+1. **Beniaguev, D., Segev, I., & London, M. (2021).** Single Cortical Neurons as Deep Artificial Neural Networks. *Neuron*, 109(17), 2727–2739.e3. https://doi.org/10.1016/j.neuron.2021.07.002
+  - GitHub: https://github.com/SelfishGene/neuron_as_deep_net
+
+2. **Aizenbud, I., Yoeli, D., Beniaguev, D., de Kock, C. P. J., London, M., & Segev, I. (2024).** What Makes Human Cortical Pyramidal Neurons Functionally Complex. Available via PubMed Central (PMC): https://pmc.ncbi.nlm.nih.gov/articles/PMC11702691/
+
+3. **Hay, E., Hill, S., Schürmann, F., Markram, H., & Segev, I. (2011).** Models of Neocortical Layer 5b Pyramidal Cells Capturing a Wide Range of Dendritic and Perisomatic Active Properties. *PLoS Computational Biology*, 7(7), e1002107. https://doi.org/10.1371/journal.pcbi.1002107
+
+4. **Spieler, A., Tetenov, A., Prabhakaran, S., & Martius, G. (2023).** The Expressive Leaky Memory Neuron: an Efficient and Expressive Phenomenological Neuron Model Can Solve Long-Horizon Tasks. *Advances in Neural Information Processing Systems (NeurIPS) 36*. https://arxiv.org/abs/2306.16922
+  - GitHub: https://github.com/AaronSpieler/elmneuron
+
